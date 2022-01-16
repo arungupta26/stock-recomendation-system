@@ -73,7 +73,7 @@ data_load_state.text("Loading data... Done.")
 st.subheader("Raw data")
 
 
-plot_raw_data()
+#plot_raw_data()
 
 # # Predict forecast with Prophet.
 # df_train = data[['Date','Close']]
