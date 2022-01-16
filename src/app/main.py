@@ -8,7 +8,7 @@ import yfinance as yf
 from tensorflow.keras.models import load_model
 import streamlit as st
 
-from datetime import 
+from datetime import date
 
 from fbprophet import Prophet
 from fbprophet.plot import plot_plotly
