@@ -11,8 +11,8 @@ start = '2000-01-01'
 end = '2022-01-16'
 
 
-st.title('<h1 style=''text-align: center; color: red;''>Stock Recomendation System.</h1>')
-st.subheader('<h2 style=''text-align: center; color: red;''>Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)<h2>')
+st.title('Stock Recomendation System.')
+st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
 
 
