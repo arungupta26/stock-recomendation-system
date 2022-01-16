@@ -10,8 +10,6 @@ import streamlit as st
 
 from datetime import date
 
-from fbprophet import Prophet
-from fbprophet.plot import plot_plotly
 from plotly import graph_objs as go
 
 
@@ -78,12 +76,22 @@ st.write(data.tail())
 
 plot_raw_data()
 
-# Predict forecast with Prophet.
-df_train = data[['Date','Close']]
-df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
+# # Predict forecast with Prophet.
+# df_train = data[['Date','Close']]
+# df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
-m = Prophet()
-m.fit(df_train)
+# m = Prophet()
+# m.fit(df_train)
+# future = m.make_future_dataframe(periods=period)
+# forecast = m.predict(future)
+
+# # Show and plot forecast
+# st.subheader('Forecast data')
+# st.write(forecast.tail())
+
+
+m = load_model('keras_model_lstm.h5')
+
 future = m.make_future_dataframe(periods=period)
 forecast = m.predict(future)
 
