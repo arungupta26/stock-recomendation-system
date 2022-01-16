@@ -52,9 +52,9 @@ fig = plt.figure(figsize=(12,6))
 ma100 = df.Close.rolling(100).mean()
 ma200 = df.Close.rolling(200).mean()
 
-plt.plot(df.Close)
-plt.plot(ma100)
-plt.plot(ma200)
+plt.plot(df.Close,'r','Actual Closing price')
+plt.plot(ma100,'g','MA 100 Closing price')
+plt.plot(ma200,'b','MA Closing price')
 plt.xlabel('Time')
 plt.ylabel('Closing Price')
 
