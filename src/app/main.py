@@ -9,6 +9,14 @@ import streamlit as st
 from datetime import date
 
 
+### all functions
+
+def load_data(ticker):
+	data = yf.download(user_input , START , TODAY)
+	data.reset_index(inplace=True)
+	return load_data
+
+
 
 
 START = "2015-01-01"
@@ -44,12 +52,7 @@ data_load_state.text("Loading data... Done.")
 
 
 
-### all functions
 
-def load_data(ticker):
-	data = yf.download(user_input , START , TODAY)
-	data.reset_index(inplace=True)
-	return load_data
 
 
 
