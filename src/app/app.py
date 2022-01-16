@@ -54,7 +54,7 @@ ma200 = df.Close.rolling(200).mean()
 
 plt.plot(df.Close,'r',label = 'Actual Closing price')
 plt.plot(ma100,'g',label = 'MA 100 Closing price')
-plt.plot(ma200,'b',label = 'MA Closing price')
+plt.plot(ma200,'b',label = 'MA 200 Closing price')
 plt.xlabel('Time')
 plt.ylabel('Closing Price')
 
