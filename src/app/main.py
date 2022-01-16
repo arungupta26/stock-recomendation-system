@@ -12,7 +12,7 @@ from datetime import date
 ### all functions
 
 def load_data(ticker):
-	data = yf.download(user_input , START , TODAY)
+	data = yf.download(ticker , START , TODAY)
 	data.reset_index(inplace=True)
 	return load_data
 
