@@ -11,7 +11,7 @@ start = '2000-01-01'
 end = '2022-01-16'
 
 
-st.title('Stock Trend Prediction')
+st.title('Stock Recomendation System.')
 
 user_input = st.text_input('Enter Stock Ticker' , 'ICICIBANK.NS')
 df = yf.download(user_input , start , end)
@@ -19,3 +19,11 @@ df = yf.download(user_input , start , end)
 #Describing Data
 st.subheader('Data from 2010 - 2022')
 st.write(df.describe())
+
+#visualizations
+
+st.subheader('Closing price Vs Time chart')
+
+fig = plt.figure(figsize=(12,6))
+plt.plot(df.Close)
+st.pyplot(fig)
