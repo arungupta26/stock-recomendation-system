@@ -10,8 +10,10 @@ import streamlit as st
 start = '2000-01-01'
 end = '2022-01-16'
 
-
+<center>
 st.title('Stock Recomendation System.')
+st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
+</center>
 
 
 tickers = pd.read_html('https://ournifty.com/stock-list-in-nse-fo-futures-and-options.html#:~:text=NSE%20F%26O%20Stock%20List%3A%20%20%20%20SL,%20%201000%20%2052%20more%20rows%20')[0]
@@ -36,11 +38,11 @@ st.write(df.describe())
 
 #visualizations
 
-st.subheader('Closing price Vs Time chart')
+# st.subheader('Closing price Vs Time chart')
 
-fig = plt.figure(figsize=(12,6))
-plt.plot(df.Close)
-st.pyplot(fig)
+# fig = plt.figure(figsize=(12,6))
+# plt.plot(df.Close)
+# st.pyplot(fig)
 
 
 st.subheader('Closing price Vs Time chart with Moving average.')
@@ -53,6 +55,10 @@ ma200 = df.Close.rolling(200).mean()
 plt.plot(df.Close)
 plt.plot(ma100)
 plt.plot(ma200)
+plt.xlabel('Time')
+plt.ylabel('Closing Price')
+
+plt.legend()
 st.pyplot(fig)
 
 
@@ -67,7 +73,7 @@ st.pyplot(fig)
 
 
 
-
+st.success("Data loaded successfully.")
 
 
 
