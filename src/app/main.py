@@ -71,7 +71,6 @@ data_load_state.text("Loading data... Done.")
 
 
 st.subheader("Raw data")
-st.write(data.tail())
 
 
 plot_raw_data()
