@@ -13,7 +13,21 @@ end = '2022-01-16'
 
 st.title('Stock Recomendation System.')
 
-user_input = st.text_input('Enter Stock Ticker' , 'ICICIBANK.NS')
+
+tickers = pd.read_html('https://ournifty.com/stock-list-in-nse-fo-futures-and-options.html#:~:text=NSE%20F%26O%20Stock%20List%3A%20%20%20%20SL,%20%201000%20%2052%20more%20rows%20')[0]
+
+tickers = tickers.SYMBOL.to_list()
+
+for count in range(len(tickers)):
+  tickers[count] = tickers[count] + ".NS"
+
+
+
+
+user_input = st.selectbox('Please select a stock.',tuple(tickers))
+
+#st.text_input('Enter Stock Ticker' , 'ICICIBANK.NS')
+
 df = yf.download(user_input , start , end)
 
 #Describing Data
