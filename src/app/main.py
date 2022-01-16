@@ -6,6 +6,9 @@ import yfinance as yf
 from tensorflow.keras.models import load_model
 import streamlit as st
 
+from datetime import date
+
+
 
 
 START = "2015-01-01"
