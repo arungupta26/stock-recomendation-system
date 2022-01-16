@@ -27,3 +27,34 @@ st.subheader('Closing price Vs Time chart')
 fig = plt.figure(figsize=(12,6))
 plt.plot(df.Close)
 st.pyplot(fig)
+
+
+st.subheader('Closing price Vs Time chart with Moving average.')
+
+fig = plt.figure(figsize=(12,6))
+
+ma100 = df.Close.rolling(100).mean()
+ma200 = df.Close.rolling(200).mean()
+
+plt.plot(df.Close)
+plt.plot(ma100)
+plt.plot(ma200)
+st.pyplot(fig)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
