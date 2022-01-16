@@ -3,12 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pandas_datareader as data
 import yfinance as yf
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 import streamlit as st
 
 
 start = '2000-01-01'
-end = '2022-01-11'
+end = '2022-01-16'
 
 
 st.title('Stock Trend Prediction')
