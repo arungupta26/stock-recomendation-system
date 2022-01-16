@@ -10,10 +10,10 @@ import streamlit as st
 start = '2000-01-01'
 end = '2022-01-16'
 
-<center>
-st.title('Stock Recomendation System.')
-st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
-</center>
+
+st.title('<h1 style=''text-align: center; color: red;''>Stock Recomendation System.</h1>')
+st.subheader('<h2 style=''text-align: center; color: red;''>Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)<h2>')
+
 
 
 tickers = pd.read_html('https://ournifty.com/stock-list-in-nse-fo-futures-and-options.html#:~:text=NSE%20F%26O%20Stock%20List%3A%20%20%20%20SL,%20%201000%20%2052%20more%20rows%20')[0]
