@@ -7,7 +7,8 @@ import linear_regression_util as lrutil
 
 
 st.title('Stock Recomendation System.')
-st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
+st.subheader('Sem-IV, BITS PIlani, WILP.')
+st.subheader('Name: Arun Gupta (2019AP04010)')
 
 tickers = lrutil.get_list(lrutil.stock_list_file)
 
