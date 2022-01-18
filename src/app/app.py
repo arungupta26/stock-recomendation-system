@@ -1,4 +1,4 @@
-
+import numpy as np
 import matplotlib.pyplot as plt
 import yfinance as yf
 import streamlit as st
@@ -12,6 +12,13 @@ st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
 
 tickers = lrutil.get_list('../resources/stock_list.txt')
+
+
+list = []
+for count in range(len(tickers)):
+    list.append(tickers[count][0])
+
+tickers = list
 
 # tickers = tickers.SYMBOL.to_list()
 
