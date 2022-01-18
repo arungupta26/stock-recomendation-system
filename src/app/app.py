@@ -12,7 +12,7 @@ st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
 # tickers = lrutil.get_list(r'./stock_list.txt')
 
-stocks = pd.read_csv(r'./stock_list.txt', header = None)
+stocks = pd.read_csv(r'./../resources/stock_list.txt', header = None)
 stocks[0] = stocks[0].str.upper()
 # convert the data frame to numpy array
 tickers = stocks.values
