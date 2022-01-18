@@ -151,10 +151,10 @@ def get_top_stock(coefficient_data, n = 5, show_dots = False) :
     print(top_stocks['Stock'].tolist())
     return top_stocks
 
-def top_five_stock():
-    file_exists = os.path.exists('readme.txt')
+def top_five_stock(stock_list_file):
+    file_exists = os.path.exists(stock_list_file)
     if not file_exists:
-        get_coefficient_dataset('stock_list.txt', show_plot = False)
+        get_coefficient_dataset(stock_list_file, show_plot = False)
 
     coefficient_data = pd.read_csv(stock_coefficient_file_name)
     return get_top_stock(coefficient_data, n=5)

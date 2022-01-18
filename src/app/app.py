@@ -9,13 +9,9 @@ import linear_regression_util as lrutil
 st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
+stock_list_file = r'../resources/stock_list.txt'
 
-# tickers = lrutil.get_list(r'./stock_list.txt')
-
-stocks = pd.read_csv(r'./../resources/stock_list.txt', header = None)
-stocks[0] = stocks[0].str.upper()
-# convert the data frame to numpy array
-tickers = stocks.values
+tickers = lrutil.get_list(stock_list_file)
 
 list = []
 for count in range(len(tickers)):
@@ -67,8 +63,8 @@ st.pyplot(fig)
 
 
 
-recomended_stocks = lrutil.top_five_stock()
-st.subheader('The top five recomended stock as date : '+ lrutil.end + ' are ' )
+recomended_stocks = lrutil.top_five_stock(stock_list_file)
+st.subheader('The top five recomended stock as date : '+ lrutil.end + ' are ' +recomended_stocks  )
 
 
 
