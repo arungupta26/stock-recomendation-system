@@ -11,7 +11,7 @@ st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
 
 
-tickers = lrutil.get_list('../resources/stock_list.txt')
+tickers = lrutil.get_list(r'./../resources/stock_list.txt')
 
 
 list = []
