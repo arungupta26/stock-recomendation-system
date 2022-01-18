@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as pl
 import yfinance as yf
 from datetime import date
+import os.path
+
 
 import pandas_datareader.data as web
 from pandas_datareader._utils import RemoteDataError
@@ -120,6 +122,7 @@ def get_coefficient_dataset(filename, show_statistics = False, show_dots = False
 
     # caculate coefficient for each symbol and store in the stock_array
     for symbol in stock_array:
+        print(symbol)
         coefficient = build_linear_regression(symbol[0], show_statistics, show_dots, show_plot)
         symbol[1] = coefficient
 
@@ -149,6 +152,10 @@ def get_top_stock(coefficient_data, n = 5, show_dots = False) :
     return top_stocks
 
 def top_five_stock():
+    file_exists = os.path.exists('readme.txt')
+    if not file_exists:
+        get_coefficient_dataset('stock_list.txt', show_plot = False)
+
     coefficient_data = pd.read_csv(stock_coefficient_file_name)
     return get_top_stock(coefficient_data, n=5)
 
