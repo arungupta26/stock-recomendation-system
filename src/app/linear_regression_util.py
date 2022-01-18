@@ -7,12 +7,12 @@ from datetime import date
 import os.path
 
 
-import pandas_datareader.data as web
 from pandas_datareader._utils import RemoteDataError
 
 from sklearn.model_selection import train_test_split
 
-stock_coefficient_file_name= 'Stock_Coefficients.csv'
+stock_list_file = r'../resources/stock_list.txt'
+stock_coefficient_file_name = 'Stock_Coefficients.csv'
 
 # Considering data from 2000 to till date for latest trend
 start = '2000-01-01'
@@ -151,8 +151,8 @@ def get_top_stock(coefficient_data, n = 5, show_dots = False) :
     print(top_stocks['Stock'].tolist())
     return top_stocks
 
-def top_five_stock(stock_list_file):
-    file_exists = os.path.exists(stock_list_file)
+def top_five_stock(stock_list_file,stock_coefficient_file_name):
+    file_exists = os.path.exists(stock_coefficient_file_name)
     if not file_exists:
         get_coefficient_dataset(stock_list_file, show_plot = False)
 
@@ -185,6 +185,18 @@ def get_similar_stock(coefficient_data, symbol, n = 3, show_dots = False):
     print("The " + str(number) + " simialr stocks are: ")
     print(similar_stocks_delete['Stock'].tolist())
     return similar_stocks
+
+
+def similar_stocks(symbol):
+    file_exists = os.path.exists(stock_coefficient_file_name)
+    if not file_exists:
+        get_coefficient_dataset(stock_list_file, show_plot = False)
+
+    coefficient_data = pd.read_csv(stock_coefficient_file_name)
+    return get_similar_stock(coefficient_data ,symbol)
+
+
+
 
 
 

@@ -9,9 +9,7 @@ import linear_regression_util as lrutil
 st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
-stock_list_file = r'../resources/stock_list.txt'
-
-tickers = lrutil.get_list(stock_list_file)
+tickers = lrutil.get_list(lrutil.stock_list_file)
 
 list = []
 for count in range(len(tickers)):
@@ -33,8 +31,8 @@ user_input = st.selectbox('Please select a stock.',tuple(tickers))
 df = yf.download(user_input , lrutil.start , lrutil.end)
 
 #Describing Data
-st.subheader('Data from 2010 - 2022')
-st.write(df.describe())
+# st.subheader('Data from 2000 - 2022')
+# st.write(df.describe())
 
 #visualizations
 
@@ -62,9 +60,14 @@ plt.legend()
 st.pyplot(fig)
 
 
+recomended_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
 
-recomended_stocks = lrutil.top_five_stock(stock_list_file)
-st.subheader('The top five recomended stock as date : '+ lrutil.end + ' are ' +recomended_stocks  )
+st.table( pd.DataFrame(recomended_stocks['Stock'].tolist(),index=( i+1 for i in range(len(recomended_stocks))),columns=['Top 5 recomended stocks']))
+
+similar_stocks = lrutil.similar_stocks(symbol=user_input)
+
+st.table(pd.DataFrame(similar_stocks['Stock'].tolist(),index=( i+1 for i in range(len(similar_stocks))),columns=["Stocks similar to selected : "+user_input+""]))
+
 
 
 
