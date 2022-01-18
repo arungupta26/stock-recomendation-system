@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import pandas_datareader as data
 import yfinance as yf
 import streamlit as st
-import linear_regression_util as lrutil
 
+import linear_regression_util as lrutil
 
 
 st.title('Stock Recomendation System.')
