@@ -1,4 +1,4 @@
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import yfinance as yf
 import streamlit as st
@@ -10,9 +10,12 @@ st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.  Arun Gupta(2019AP04010)')
 
 
+# tickers = lrutil.get_list(r'./stock_list.txt')
 
-tickers = lrutil.get_list(r'stock_list.txt')
-
+stocks = pd.read_csv(r'./stock_list.txt', header = None)
+stocks[0] = stocks[0].str.upper()
+# convert the data frame to numpy array
+tickers = stocks.values
 
 list = []
 for count in range(len(tickers)):
