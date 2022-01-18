@@ -62,11 +62,20 @@ st.pyplot(fig)
 
 recomended_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
 
-st.table( pd.DataFrame(recomended_stocks['Stock'].tolist(),index=( i+1 for i in range(len(recomended_stocks))),columns=['Top 5 recomended stocks']))
 
 similar_stocks = lrutil.similar_stocks(symbol=user_input)
 
-st.table(pd.DataFrame(similar_stocks['Stock'].tolist(),index=( i+1 for i in range(len(similar_stocks))),columns=["Stocks similar to selected : "+user_input+""]))
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("Top 5 recommended stocks")
+    st.table( pd.DataFrame(recomended_stocks['Stock'].tolist(),index=( i+1 for i in range(len(recomended_stocks))),columns=['Name']))
+
+with col2:
+    st.markdown("Stocks similar to selected : "+user_input)
+    st.table(pd.DataFrame(similar_stocks['Stock'].tolist(),index=( i+1 for i in range(len(similar_stocks))),columns=["Name"]))
+
 
 
 
