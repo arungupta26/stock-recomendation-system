@@ -60,7 +60,7 @@ features = ["Price", "Volume", "Market Cap", "Beta", "PE Ratio", "EPS"]
 
 st.subheader("Stocks you may be interested based on features selected and accuracy level")
 selected_features = st.multiselect("Please select the features", features ,["Volume","Price"])
-level = st.select_slider('Please select level', options=[1,2,3] , value= (2))
+level = st.select_slider('Please select accuracy level', options=[1,2,3] , value= (2))
 
 selected_feature_index = []
 index =1
@@ -68,12 +68,18 @@ for f in features:
     if f in selected_features:
         selected_feature_index.append(index)
     index = index+1
-feature_based_similar_stocks = kutil.in_cluster_stocks(user_input,features,selected_feature_index,level)
 
-if len(feature_based_similar_stocks) == 0:
-    st.markdown("Sorry, we can not make any recommendation based on your input")
-if len(feature_based_similar_stocks) > 0:
-    st.table(pd.DataFrame(feature_based_similar_stocks,index=( i+1 for i in range(len(feature_based_similar_stocks))),columns=['Based on Features and accuracy level selected, Stocks are']))
+if len(selected_feature_index) == 0:
+    st.markdown("Please select atleast one feature.")
+
+
+if len(selected_feature_index) > 0:
+    feature_based_similar_stocks = kutil.in_cluster_stocks(user_input,features,selected_feature_index,level)
+
+    if len(feature_based_similar_stocks) == 0:
+        st.markdown("Sorry, we can not make any recommendation based on your input")
+    if len(feature_based_similar_stocks) > 0:
+        st.table(pd.DataFrame(feature_based_similar_stocks,index=( i+1 for i in range(len(feature_based_similar_stocks))),columns=['Based on Features and accuracy level selected, Stocks are']))
 
 
 
