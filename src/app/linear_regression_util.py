@@ -12,7 +12,7 @@ from pandas_datareader._utils import RemoteDataError
 from sklearn.model_selection import train_test_split
 
 stock_list_file = r'../resources/stock_list.txt'
-stock_coefficient_file_name = 'Stock_Coefficients.csv'
+stock_coefficient_file_name = './../resources/Stock_Coefficients.csv'
 
 # Considering data from 2000 to till date for latest trend
 start = '2000-01-01'
@@ -157,7 +157,10 @@ def top_five_stock(stock_list_file,stock_coefficient_file_name):
         get_coefficient_dataset(stock_list_file, show_plot = False)
 
     coefficient_data = pd.read_csv(stock_coefficient_file_name)
-    return get_top_stock(coefficient_data, n=5)
+    top_performing_stocks =  get_top_stock(coefficient_data, n=5)
+    pd.DataFrame(top_performing_stocks, index=(i + 1 for i in range(len(top_performing_stocks))), columns=['Name'])
+    return top_performing_stocks
+
 
 
 

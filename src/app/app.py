@@ -4,6 +4,7 @@ import yfinance as yf
 import streamlit as st
 
 import linear_regression_util as lrutil
+import k_mean_util as kutil
 
 
 st.title('Stock Recomendation System.')
@@ -18,31 +19,9 @@ for count in range(len(tickers)):
 
 tickers = list
 
-# tickers = tickers.SYMBOL.to_list()
-
-# for count in range(len(tickers)):
-#   tickers[count] = tickers[count] + ".NS"
-
-
-
 user_input = st.selectbox('Please select a stock.',tuple(tickers))
 
-#st.text_input(Enter Stock Ticker , ICICIBANK.NS)
-
 df = yf.download(user_input , lrutil.start , lrutil.end)
-
-#Describing Data
-# st.subheader('Data from 2000 - 2022')
-# st.write(df.describe())
-
-#visualizations
-
-# st.subheader(Closing price Vs Time chart)
-
-# fig = plt.figure(figsize=(12,6))
-# plt.plot(df.Close)
-# st.pyplot(fig)
-
 
 st.subheader("Closing price Vs Time chart with Moving average.")
 
@@ -60,9 +39,7 @@ plt.ylabel('Closing Price')
 plt.legend()
 st.pyplot(fig)
 
-
-recomended_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
-
+top_performing_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
 
 similar_stocks = lrutil.similar_stocks(symbol=user_input)
 
@@ -70,12 +47,38 @@ similar_stocks = lrutil.similar_stocks(symbol=user_input)
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("Top 5 recommended stocks")
-    st.table( pd.DataFrame(recomended_stocks['Stock'].tolist(),index=( i+1 for i in range(len(recomended_stocks))),columns=['Name']))
+    st.subheader("Today's High performing stocks (Top Five)")
+    st.table(pd.DataFrame(top_performing_stocks['Stock'].tolist(), index=(i + 1 for i in range(len(top_performing_stocks))), columns=['Name']))
 
 with col2:
-    st.markdown("Stocks similar to selected : "+user_input)
+    st.subheader("Stocks similar to selected : "+user_input)
     st.table(pd.DataFrame(similar_stocks['Stock'].tolist(),index=( i+1 for i in range(len(similar_stocks))),columns=["Name"]))
+
+
+
+features = ["Price", "Volume", "Market Cap", "Beta", "PE Ratio", "EPS"]
+
+st.subheader("Stocks you may be interested based on features selected and accuracy level")
+selected_features = st.multiselect("Please select the features", features ,["Volume","Price"])
+level = st.select_slider('Please select level', options=[1,2,3] , value= (2))
+
+selected_feature_index = []
+index =1
+for f in features:
+    if f in selected_features:
+        selected_feature_index.append(index)
+    index = index+1
+feature_based_similar_stocks = kutil.in_cluster_stocks(user_input,features,selected_feature_index,level)
+
+if len(feature_based_similar_stocks) == 0:
+    st.markdown("Sorry, we can not make any recommendation based on your input")
+if len(feature_based_similar_stocks) > 0:
+    st.table(pd.DataFrame(feature_based_similar_stocks,index=( i+1 for i in range(len(feature_based_similar_stocks))),columns=['Based on Features and accuracy level selected, Stocks are']))
+
+
+
+
+
 
 
 
