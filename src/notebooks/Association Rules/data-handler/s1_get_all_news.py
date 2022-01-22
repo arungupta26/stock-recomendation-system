@@ -20,11 +20,15 @@ class NewsLinkCrawler:
 
 		soup = BeautifulSoup(html.text)  #Parse webpage by using BeautifulSoup
 		links = soup.select("urlset > url > loc")
+		print("links size is ",len(links))
+		index =1
 		for link in links:
 			url = link.get_text()  #Get the text of each tag
+			print(index, " out of ", len(links)," url ", url)
+			index = index+1
 			if '/news/' in url:
 				self.pageurls.append(url)
-		f = open('./../data/all_news.txt', 'w')
+		f = open('./../../../resources/apriori/all_news.txt', 'w')
 		f.write('\n'.join(self.pageurls))
 		f.close()
 

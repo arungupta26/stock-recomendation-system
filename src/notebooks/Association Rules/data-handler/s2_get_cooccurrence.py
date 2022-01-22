@@ -47,15 +47,17 @@ class OccurrenceRetriever:
 			# time.sleep(1)
 			count += 1
 			print(count)
-		filename = './../data/co-occurrence_' + str(self.start) + '-' + str(self.end) + '.txt'
+		filename = './../../../resources/apriori/co-occurrence_' + str(self.start) + '-' + str(self.end) + '.txt'
 		f = open(filename, 'w')
 		f.write('\n'.join(self.occurrences))
 		f.close()
 
 def main():
-	newsFile = "./../data/all_news.txt" #Initial url for getting all page tags
-	start = 0
-	end = 1000
+	newsFile = "./../../../resources/apriori/all_news.txt" #Initial url for getting all page tags
+	start = 5000
+	end = 6000
 	crawler = OccurrenceRetriever(newsFile, start, end)
 	crawler.run()
 main()
+
+#%%

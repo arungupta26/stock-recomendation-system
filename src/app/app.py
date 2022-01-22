@@ -5,7 +5,7 @@ import streamlit as st
 
 import linear_regression_util as lrutil
 import k_mean_util as kutil
-
+import fbprophet_util as fbp_util
 
 st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.')
@@ -19,9 +19,9 @@ for count in range(len(tickers)):
 
 tickers = list
 
-user_input = st.selectbox('Please select a stock.',tuple(tickers))
+user_input = st.selectbox('Please select a stock.', tuple(tickers))
 
-df = yf.download(user_input , lrutil.start , lrutil.end)
+df = yf.download(user_input, lrutil.start, lrutil.end)
 
 st.subheader("Closing price Vs Time chart with Moving average.")
 
@@ -38,6 +38,11 @@ plt.ylabel('Closing Price')
 
 plt.legend()
 st.pyplot(fig)
+
+predicted_data = fbp_util.get_predicted_price(user_input)
+
+st.subheader("Closing price for " + user_input + " is INR. " + f"{(df.iloc[-1]['Close']):.4f}")
+st.table(predicted_data)
 
 top_performing_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
 
@@ -80,12 +85,6 @@ if len(selected_feature_index) > 0:
         st.markdown("Sorry, we can not make any recommendation based on your input")
     if len(feature_based_similar_stocks) > 0:
         st.table(pd.DataFrame(feature_based_similar_stocks,index=( i+1 for i in range(len(feature_based_similar_stocks))),columns=['Based on Features and accuracy level selected, Stocks are']))
-
-
-
-
-
-
 
 
 

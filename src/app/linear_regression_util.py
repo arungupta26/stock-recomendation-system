@@ -42,9 +42,7 @@ def load_stock_data(symbol):
         return float('NaN')
     close = df[['Close']]
 
-    # Normalize close value by divided by the base value (the close price of the earliest day) and multiplied by 100
     base = close.iloc[0]['Close']
-    # neglect the stocks the initial close price < 25 USD to insure the selected stock value
     if base > 10 :
         close = close.assign(Close = close['Close'] / base * 100)
     return close
