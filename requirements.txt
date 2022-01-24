@@ -129,7 +129,6 @@ setuptools-git==1.2
 simplejson==3.16.0
 six==1.14.0
 sklearn==0.0
-sos==4.1
 ssh-import-id==5.10
 stack-data==0.1.4
 streamlit==1.4.0
