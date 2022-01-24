@@ -68,8 +68,8 @@ def build_linear_regression(symbol, show_statistics = True, show_dots = True, sh
         return float('NaN')
 
     # normalize datatime datatype to integer
-    # simply converting datetime's to # of days since 2018-04-01 divided by 100
-    close.index = (close.index - pd.to_datetime('2018-04-01')).days / 100
+    # simply converting datetime's to # of days since 2020-04-01 divided by 100
+    close.index = (close.index - pd.to_datetime('2020-01-01')).days / 100
     close = close.reset_index()
     train, test= train_test_split(close)
 

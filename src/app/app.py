@@ -25,14 +25,14 @@ df = yf.download(user_input, lrutil.start, lrutil.end)
 
 st.subheader("Closing price Vs Time chart with Moving average.")
 
-fig = plt.figure(figsize=(12,6))
+fig = plt.figure(figsize=(12, 6))
 
 ma100 = df.Close.rolling(100).mean()
 ma200 = df.Close.rolling(200).mean()
 
-plt.plot(df.Close,'r',label = 'Actual Closing price')
-plt.plot(ma100,'g',label = 'MA 100 Closing price')
-plt.plot(ma200,'b',label = 'MA 200 Closing price')
+plt.plot(df.Close, 'r', label='Actual Closing price')
+plt.plot(ma100, 'g', label='MA 100 Closing price')
+plt.plot(ma200, 'b', label='MA 200 Closing price')
 plt.xlabel('Time')
 plt.ylabel('Closing Price')
 
@@ -48,45 +48,41 @@ top_performing_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.sto
 
 similar_stocks = lrutil.similar_stocks(symbol=user_input)
 
-
 col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Today's High performing stocks (Top Five)")
-    st.table(pd.DataFrame(top_performing_stocks['Stock'].tolist(), index=(i + 1 for i in range(len(top_performing_stocks))), columns=['Name']))
+    st.table(
+        pd.DataFrame(top_performing_stocks['Stock'].tolist(), index=(i + 1 for i in range(len(top_performing_stocks))),
+                     columns=['Name']))
 
 with col2:
-    st.subheader("Stocks similar to selected : "+user_input)
-    st.table(pd.DataFrame(similar_stocks['Stock'].tolist(),index=( i+1 for i in range(len(similar_stocks))),columns=["Name"]))
-
-
+    st.subheader("Stocks similar to selected : " + user_input)
+    st.table(pd.DataFrame(similar_stocks['Stock'].tolist(), index=(i + 1 for i in range(len(similar_stocks))),
+                          columns=["Name"]))
 
 features = ["Price", "Volume", "Market Cap", "Beta", "PE Ratio", "EPS"]
 
 st.subheader("Stocks you may be interested based on features selected and accuracy level")
-selected_features = st.multiselect("Please select the features", features ,["Volume","Price"])
-level = st.select_slider('Please select accuracy level', options=[1,2,3] , value= (2))
+selected_features = st.multiselect("Please select the features", features, ["Volume", "Price"])
+level = st.select_slider('Please select accuracy level.(Being 1 as LOW and 3 as HIGH)', options=[1, 2, 3], value=(2))
 
 selected_feature_index = []
-index =1
+index = 1
 for f in features:
     if f in selected_features:
         selected_feature_index.append(index)
-    index = index+1
+    index = index + 1
 
 if len(selected_feature_index) == 0:
-    st.markdown("Please select atleast one feature.")
-
+    st.markdown("Please select at least one feature.")
 
 if len(selected_feature_index) > 0:
-    feature_based_similar_stocks = kutil.in_cluster_stocks(user_input,features,selected_feature_index,level)
+    feature_based_similar_stocks = kutil.in_cluster_stocks(user_input, features, selected_feature_index, level)
 
     if len(feature_based_similar_stocks) == 0:
         st.markdown("Sorry, we can not make any recommendation based on your input")
     if len(feature_based_similar_stocks) > 0:
-        st.table(pd.DataFrame(feature_based_similar_stocks,index=( i+1 for i in range(len(feature_based_similar_stocks))),columns=['Based on Features and accuracy level selected, Stocks are']))
-
-
-
-
-
+        st.table(
+            pd.DataFrame(feature_based_similar_stocks, index=(i + 1 for i in range(len(feature_based_similar_stocks))),
+                         columns=['Based on Features and accuracy level selected, Stocks are']))
