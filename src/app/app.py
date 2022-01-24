@@ -6,6 +6,8 @@ import streamlit as st
 import linear_regression_util as lrutil
 import k_mean_util as kutil
 import fbprophet_util as fbp_util
+import google_news_util as gnu
+import plotly.express as px
 
 st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.')
@@ -86,3 +88,24 @@ if len(selected_feature_index) > 0:
         st.table(
             pd.DataFrame(feature_based_similar_stocks, index=(i + 1 for i in range(len(feature_based_similar_stocks))),
                          columns=['Based on Features and accuracy level selected, Stocks are']))
+
+positive, neutral, negative = gnu.fetch_google_sentimental_analysis(user_input)
+
+total_news = (positive + neutral + negative)
+
+if (total_news > 0):
+    # Creating PieCart
+    st.subheader('Sentimental analysis for selected stock ' + user_input)
+    st.markdown('**Based on google news data')
+    labels = ' Positive [' + str(round(positive)) + '%]' + '\n Neutral [' + str(
+        round(neutral)) + '%]' + '\n Negative [' + str(round(negative)) + '%]'
+
+    sentimental_data = [['Positive', str(round(positive * 100 / total_news)) + '%'],
+                        ['Neutral', str(round(neutral * 100 / total_news)) + '%'],
+                        ['Negative', str(round(negative * 100 / total_news)) + '%']]
+
+    sizes = [positive, neutral, negative]
+    sentimental_analysis = pd.DataFrame(sentimental_data, columns=['Sentiment', 'Pecenteage'])
+    st.table(sentimental_analysis)
+else:
+    st.subheader("No news available for selected stock " + user_input)
