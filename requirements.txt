@@ -17,10 +17,8 @@ cffi==1.15.0
 chardet==3.0.4
 charset-normalizer==2.0.10
 Click==7.0
-cloud-init==21.4
 cmdstanpy==0.9.5
 colorama==0.4.3
-command-not-found==0.3
 configobj==5.0.6
 constantly==15.1.0
 convertdate==2.4.0
@@ -32,7 +30,6 @@ debugpy==1.5.1
 decorator==5.1.1
 defusedxml==0.7.1
 distro==1.4.0
-distro-info===0.23ubuntu1
 ec2-hibinit-agent==1.0.0
 entrypoints==0.3
 ephem==4.1.3
