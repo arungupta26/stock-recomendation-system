@@ -7,7 +7,6 @@ import linear_regression_util as lrutil
 import k_mean_util as kutil
 import fbprophet_util as fbp_util
 import google_news_util as gnu
-import plotly.express as px
 
 st.title('Stock Recomendation System.')
 st.subheader('Sem-IV, BITS PIlani, WILP.')
@@ -42,8 +41,21 @@ plt.legend()
 st.pyplot(fig)
 
 predicted_data = fbp_util.get_predicted_price(user_input)
+predicted_data = predicted_data.reset_index()
 
-st.subheader("Closing price for " + user_input + " is INR. " + f"{(df.iloc[-1]['Close']):.4f}")
+predicted_data['ds'] = predicted_data['ds'].dt.strftime('%m/%d/%Y')
+predicted_data.rename(columns = {'ds':'Future dates'}, inplace = True)
+st.subheader("Last day closing price for " + user_input + " was Rs:" + f"{(df.iloc[-1]['Close']):.4f}")
+hide_dataframe_row_index = """
+            <style>
+            .row_heading.level0 {display:none}
+            .blank {display:none}
+            </style>
+            """
+
+# Inject CSS with Markdown
+st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
+
 st.table(predicted_data)
 
 top_performing_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.stock_coefficient_file_name)
@@ -105,7 +117,8 @@ if (total_news > 0):
                         ['Negative', str(round(negative * 100 / total_news)) + '%']]
 
     sizes = [positive, neutral, negative]
-    sentimental_analysis = pd.DataFrame(sentimental_data, columns=['Sentiment', 'Pecenteage'])
+    sentimental_analysis = pd.DataFrame(sentimental_data,  index=(i + 1 for i in range(len(sentimental_data))),
+                                        columns=['Sentiment', 'Percentage'])
     st.table(sentimental_analysis)
 else:
     st.subheader("No news available for selected stock " + user_input)
