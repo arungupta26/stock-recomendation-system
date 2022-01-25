@@ -5,6 +5,8 @@ import matplotlib.pyplot as pl
 import yfinance as yf
 from datetime import date
 import os.path
+import streamlit as st
+
 
 from pandas_datareader._utils import RemoteDataError
 
@@ -145,7 +147,7 @@ def get_top_stock(coefficient_data, n=5, show_dots=False):
     print(top_stocks['Stock'].tolist())
     return top_stocks
 
-
+@st.cache
 def top_five_stock(stock_list_file, stock_coefficient_file_name):
     file_exists = os.path.exists(stock_coefficient_file_name)
     if not file_exists:
