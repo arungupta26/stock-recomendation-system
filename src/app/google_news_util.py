@@ -10,13 +10,15 @@ from wordcloud import WordCloud, STOPWORDS
 
 nltk.download('vader_lexicon')
 
-def percentage(part,whole):
-    return 100 * float(part)/float(whole)
 
-def fetch_google_sentimental_analysis(stock_name, past_days =5):
+def percentage(part, whole):
+    return 100 * float(part) / float(whole)
+
+
+def fetch_google_sentimental_analysis(stock_name, past_days=5):
     now = dt.date.today()
     now = now.strftime('%m-%d-%Y')
-    yesterday = dt.date.today() - dt.timedelta(days = past_days)
+    yesterday = dt.date.today() - dt.timedelta(days=past_days)
     yesterday = yesterday.strftime('%m-%d-%Y')
 
     nltk.download('punkt')
@@ -25,103 +27,106 @@ def fetch_google_sentimental_analysis(stock_name, past_days =5):
     config.browser_user_agent = user_agent
     config.request_timeout = 10
 
-    #Extract News with Google News
-    googlenews = GoogleNews(start=yesterday,end=now)
+    # Extract News with Google News
+    googlenews = GoogleNews(start=yesterday, end=now)
     googlenews.search(stock_name)
     result = googlenews.result()
 
-    #store the results
+    # store the results
     df = pd.DataFrame(result)
 
     news_df = pd.DataFrame()
 
-    #Assigning Initial Values
+    # Assigning Initial Values
     positive = 0
     negative = 0
     neutral = 0
 
     try:
-        list =[] #creating an empty list
+        list = []  # creating an empty list
         for i in df.index:
-            dict = {} #creating an empty dictionary to append an article in every single iteration
-            article = Article(df['link'][i],config=config) #providing the link
+            dict = {}  # creating an empty dictionary to append an article in every single iteration
+            article = Article(df['link'][i], config=config)  # providing the link
             try:
-                article.download() #downloading the article
-                article.parse() #parsing the article
-                article.nlp() #performing natural language processing (nlp)
+                article.download()  # downloading the article
+                article.parse()  # parsing the article
+                article.nlp()  # performing natural language processing (nlp)
             except:
                 pass
-                #storing results in our empty dictionary
-            dict['Date']=df['date'][i]
-            dict['Media']=df['media'][i]
-            dict['Title']=article.title
-            dict['Article']=article.text
-            dict['Summary']=article.summary
-            dict['Key_words']=article.keywords
+                # storing results in our empty dictionary
+            dict['Date'] = df['date'][i]
+            dict['Media'] = df['media'][i]
+            dict['Title'] = article.title
+            dict['Article'] = article.text
+            dict['Summary'] = article.summary
+            dict['Key_words'] = article.keywords
             list.append(dict)
         check_empty = not any(list)
         # print(check_empty)
-        if check_empty == False:
-            news_df=pd.DataFrame(list)
-            print(news_df)
+        if not check_empty:
+            news_df = pd.DataFrame(list)
         else:
-            return positive,neutral,negative
+            print("No news availabe in last 5 days for stock " + stock_name)
+            return positive, neutral, negative
 
     except Exception as e:
-        #exception handling
+        # exception handling
         print("exception occurred:" + str(e))
-        print('Looks like, there is some error in retrieving the data, Please try again or try with a different ticker.' )
+        print(
+            'Looks like, there is some error in retrieving the data, Please try again or try with a different ticker.')
 
-
-    #Creating empty lists
+    # Creating empty lists
     news_list = []
     neutral_list = []
     negative_list = []
     positive_list = []
 
-    if(len(news_df)>0):
-        #Iterating over the tweets in the dataframe
+    if (len(news_df) > 0):
+        # Iterating over the tweets in the dataframe
         for news in news_df['Summary']:
             news_list.append(news)
             analyzer = SentimentIntensityAnalyzer().polarity_scores(news)
             neg = analyzer['neg']
-            neu = analyzer['neu']
             pos = analyzer['pos']
-            comp = analyzer['compound']
+            print(news)
+            print("------------------------------------")
+            print('Positive : ' + str(pos), "Negative : " + str(neg))
+            print("------------------------------------")
+            print("------------------------------------")
 
             if neg > pos:
-                negative_list.append(news) #appending the news that satisfies this condition
-                negative += 1 #increasing the count by 1
+                negative_list.append(news)  # appending the news that satisfies this condition
+                negative += 1  # increasing the count by 1
             elif pos > neg:
-                positive_list.append(news) #appending the news that satisfies this condition
-                positive += 1 #increasing the count by 1
+                positive_list.append(news)  # appending the news that satisfies this condition
+                positive += 1  # increasing the count by 1
             elif pos == neg:
-                neutral_list.append(news) #appending the news that satisfies this condition
-                neutral += 1 #increasing the count by 1
+                neutral_list.append(news)  # appending the news that satisfies this condition
+                neutral += 1  # increasing the count by 1
 
-        positive = percentage(positive, len(news_df)) #percentage is the function defined above
+        positive = percentage(positive, len(news_df))  # percentage is the function defined above
         negative = percentage(negative, len(news_df))
         neutral = percentage(neutral, len(news_df))
 
-        #Converting lists to pandas dataframe
+        # Converting lists to pandas dataframe
         news_list = pd.DataFrame(news_list)
         neutral_list = pd.DataFrame(neutral_list)
         negative_list = pd.DataFrame(negative_list)
         positive_list = pd.DataFrame(positive_list)
-        #using len(length) function for counting
+        # using len(length) function for counting
         print("Positive Sentiment:", '%.2f' % len(positive_list), end='\n')
         print("Neutral Sentiment:", '%.2f' % len(neutral_list), end='\n')
         print("Negative Sentiment:", '%.2f' % len(negative_list), end='\n')
 
-            # #Creating PieCart
-            # labels = ['Positive ['+str(round(positive))+'%]' , 'Neutral ['+str(round(neutral))+'%]','Negative ['+str(round(negative))+'%]']
-            # sizes = [positive, neutral, negative]
-            # colors = ['yellowgreen', 'blue','red']
-            # patches, texts = plt.pie(sizes,colors=colors, startangle=90)
-            # plt.style.use('default')
-            # plt.legend(labels)
-            # plt.title("Sentiment Analysis Result for stock= "+ stock_name +"" )
-            # plt.axis('equal')
-            # plt.show()
+        # #Creating PieCart
+        # labels = ['Positive ['+str(round(positive))+'%]' , 'Neutral ['+str(round(neutral))+'%]','Negative ['+str(round(negative))+'%]']
+        # sizes = [positive, neutral, negative]
+        # colors = ['yellowgreen', 'blue','red']
+        # patches, texts = plt.pie(sizes,colors=colors, startangle=90)
+        # plt.style.use('default')
+        # plt.legend(labels)
+        # plt.title("Sentiment Analysis Result for stock= "+ stock_name +"" )
+        # plt.axis('equal')
+        # plt.show()
 
-        return len(positive_list),len(neutral_list),len(negative_list)
+        return len(positive_list), len(neutral_list), len(negative_list)
