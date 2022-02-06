@@ -7,7 +7,6 @@ from datetime import date
 import os.path
 import streamlit as st
 
-
 from pandas_datareader._utils import RemoteDataError
 
 from sklearn.model_selection import train_test_split
@@ -147,6 +146,7 @@ def get_top_stock(coefficient_data, n=5, show_dots=False):
     print(top_stocks['Stock'].tolist())
     return top_stocks
 
+
 @st.cache
 def top_five_stock(stock_list_file, stock_coefficient_file_name):
     file_exists = os.path.exists(stock_coefficient_file_name)
@@ -191,3 +191,14 @@ def similar_stocks(symbol):
 
     coefficient_data = pd.read_csv(stock_coefficient_file_name)
     return get_similar_stock(coefficient_data, symbol)
+
+
+def dailyTop5Delta():
+    delta_df = pd.read_csv(stock_coefficient_file_name)
+    delta_df = delta_df[['Stock', 'LastDayChange']]
+    delta_df_positive = delta_df[delta_df.LastDayChange > 0]
+    delta_df_positive = delta_df_positive.sort_values(by=['LastDayChange'], ascending=False)[:5]
+
+    delta_df_negative = delta_df[delta_df.LastDayChange < 0].sort_values(by=['LastDayChange'], ascending=True)[:5]
+
+    return delta_df_positive, delta_df_negative

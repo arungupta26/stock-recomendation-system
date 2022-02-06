@@ -41,6 +41,8 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
     positive = 0
     negative = 0
     neutral = 0
+    news_summary_list = []
+    news_title_list = []
 
     try:
         list = []  # creating an empty list
@@ -61,13 +63,15 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
             dict['Summary'] = article.summary
             dict['Key_words'] = article.keywords
             list.append(dict)
+            news_title_list.append(article.title)
+            news_summary_list.append(article.summary)
         check_empty = not any(list)
         # print(check_empty)
         if not check_empty:
             news_df = pd.DataFrame(list)
         else:
             print("No news availabe in last 5 days for stock " + stock_name)
-            return positive, neutral, negative
+            return news_title_list, news_summary_list, positive, neutral, negative
 
     except Exception as e:
         # exception handling
@@ -76,7 +80,6 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
             'Looks like, there is some error in retrieving the data, Please try again or try with a different ticker.')
 
     # Creating empty lists
-    news_list = []
     neutral_list = []
     negative_list = []
     positive_list = []
@@ -84,7 +87,7 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
     if (len(news_df) > 0):
         # Iterating over the tweets in the dataframe
         for news in news_df['Summary']:
-            news_list.append(news)
+            #news_list.append(news)
             analyzer = SentimentIntensityAnalyzer().polarity_scores(news)
             neg = analyzer['neg']
             pos = analyzer['pos']
@@ -109,7 +112,6 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
         neutral = percentage(neutral, len(news_df))
 
         # Converting lists to pandas dataframe
-        news_list = pd.DataFrame(news_list)
         neutral_list = pd.DataFrame(neutral_list)
         negative_list = pd.DataFrame(negative_list)
         positive_list = pd.DataFrame(positive_list)
@@ -118,15 +120,4 @@ def fetch_google_sentimental_analysis(stock_name, past_days=5):
         print("Neutral Sentiment:", '%.2f' % len(neutral_list), end='\n')
         print("Negative Sentiment:", '%.2f' % len(negative_list), end='\n')
 
-        # #Creating PieCart
-        # labels = ['Positive ['+str(round(positive))+'%]' , 'Neutral ['+str(round(neutral))+'%]','Negative ['+str(round(negative))+'%]']
-        # sizes = [positive, neutral, negative]
-        # colors = ['yellowgreen', 'blue','red']
-        # patches, texts = plt.pie(sizes,colors=colors, startangle=90)
-        # plt.style.use('default')
-        # plt.legend(labels)
-        # plt.title("Sentiment Analysis Result for stock= "+ stock_name +"" )
-        # plt.axis('equal')
-        # plt.show()
-
-        return len(positive_list), len(neutral_list), len(negative_list)
+        return news_title_list , news_summary_list, len(positive_list), len(neutral_list), len(negative_list)

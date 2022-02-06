@@ -1,14 +1,13 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import yfinance as yf
 import streamlit as st
-import plotly.figure_factory as ff
+import yfinance as yf
 
-import linear_regression_util as lrutil
-import k_mean_util as kutil
 import fbprophet_util as fbp_util
 import google_news_util as gnu
+import k_mean_util as kutil
+import linear_regression_util as lrutil
 
 title_alignment = """
 <style>
@@ -35,45 +34,47 @@ user_input = st.selectbox('Please select a stock.', tuple(tickers))
 
 df = yf.download(user_input, lrutil.start, lrutil.end)
 
-p1, p2 = st.columns(2)
+st.subheader("Closing price Vs Time chart with Moving average.")
 
-with p1:
-    st.subheader("Closing price Vs Time chart with Moving average.")
+fig = plt.figure(figsize=(12, 6))
 
-    fig = plt.figure(figsize=(12, 6))
+ma100 = df.Close.rolling(100).mean()
+ma200 = df.Close.rolling(200).mean()
 
-    ma100 = df.Close.rolling(100).mean()
-    ma200 = df.Close.rolling(200).mean()
+plt.plot(df.Close, 'r', label='Actual Closing price')
+plt.plot(ma100, 'g', label='MA 100 Closing price')
+plt.plot(ma200, 'b', label='MA 200 Closing price')
+plt.xlabel('Time')
+plt.ylabel('Closing Price')
 
-    plt.plot(df.Close, 'r', label='Actual Closing price')
-    plt.plot(ma100, 'g', label='MA 100 Closing price')
-    plt.plot(ma200, 'b', label='MA 200 Closing price')
-    plt.xlabel('Time')
-    plt.ylabel('Closing Price')
+plt.legend()
+st.pyplot(fig)
 
-    plt.legend()
-    st.pyplot(fig)
-
-    # chart_data = pd.DataFrame(np.random.randn(20, 3), columns=['Actual Closing price', 'MA 100 Closing price',
-    #                                                            'MA 200 Closing price'])
-    #
-    # st.line_chart(chart_data)
+# p1 = st.columns(1)
+#
+# with p1:
 
 
-with p2:
-    st.subheader("Weekly return Vs Time chart.")
+# chart_data = pd.DataFrame(np.random.randn(20, 3), columns=['Actual Closing price', 'MA 100 Closing price',
+#                                                            'MA 200 Closing price'])
+#
+# st.line_chart(chart_data)
 
-    fig2 = plt.figure(figsize=(12, 6))
+# with p2:
+#     posDelta, negDelta = lrutil.dailyTop5Delta()
+#
+#     # l1, l2 = st.columns(2)
+#     #
+#     # with l1:
+#     st.subheader("Top gainers of the day(in %)")
+#     st.table(posDelta)
+#
+#
+# with p3:
+#
+#     st.subheader("Top losers of the day(in %)")
+#     st.table(negDelta)
 
-    daily_return = df.pct_change(7) * 100
-
-    plt.plot(daily_return['Close'], 'b', label='Daily Return')
-    plt.xlabel('Time')
-    plt.ylabel('Monthly return percentage')
-
-    plt.legend()
-
-    st.line_chart(daily_return['Close'])
 
 c1, c2 = st.columns(2)
 
@@ -129,7 +130,7 @@ top_performing_stocks = lrutil.top_five_stock(lrutil.stock_list_file, lrutil.sto
 
 similar_stocks = lrutil.similar_stocks(symbol=user_input)
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.subheader("Today's High performing stocks (Top Five)")
@@ -143,14 +144,42 @@ with col2:
                           columns=["Name"]))
 
 with col3:
-    positive, neutral, negative = gnu.fetch_google_sentimental_analysis(user_input)
+    posDelta, negDelta = lrutil.dailyTop5Delta()
 
-    total_news = (positive + neutral + negative)
+    # l1, l2 = st.columns(2)
+    #
+    # with l1:
+    st.subheader("Top gainers of the day(in %)")
+    st.table(posDelta)
 
+with col4:
+    st.subheader("Top losers of the day(in %)")
+    st.table(negDelta)
+
+allnewstitle, allnewssummary, positive, neutral, negative = gnu.fetch_google_sentimental_analysis(user_input)
+
+total_news = (positive + neutral + negative)
+
+n1, n2 = st.columns(2)
+
+with n1:
+    # st.table(allnews)
+    if (total_news > 0):
+        st.subheader('All news extracted from google for ' + user_input)
+
+        index = 0
+        for newstitle in allnewstitle:
+            with st.expander(newstitle):
+                st.write(allnewssummary[index])
+    else:
+        st.subheader("No news available for selected stock " + user_input)
+
+with n2:
     if (total_news > 0):
         # Creating PieCart
         st.subheader('Sentimental analysis for selected stock ' + user_input)
         st.markdown('**Based on google news data')
+
         labels = ' Positive [' + str(round(positive)) + '%]' + '\n Neutral [' + str(
             round(neutral)) + '%]' + '\n Negative [' + str(round(negative)) + '%]'
 
@@ -179,9 +208,7 @@ with col3:
         plt.legend(patches, mylabels, loc="upper left", prop={"size": 4})
         plt.axis('equal')
 
-        #st.pyplot(fig)
+        # st.pyplot(fig)
 
-        st.bar_chart(pd.DataFrame(np.array([[positive,neutral,negative]]), columns=mylabels))
+        st.bar_chart(pd.DataFrame(np.array([[positive, neutral, negative]]), columns=mylabels))
 
-    else:
-        st.subheader("No news available for selected stock " + user_input)
