@@ -169,7 +169,13 @@ def get_similar_stock(coefficient_data, symbol, n=3, show_dots=False):
     offset = top_stocks.index.get_loc(row.name)
 
     # take similar stocks in the table from offset-3 to offset+3
-    similar_stocks = top_stocks[offset - n: offset + n]
+    start_offset = offset - n
+    end_offset = offset + n
+
+    if start_offset < 0:
+        start_offset = 0
+
+    similar_stocks = top_stocks[start_offset: end_offset]
     similar_stocks_list = similar_stocks['Stock'].tolist()
     # plot stocks
     for symbol in similar_stocks_list:
@@ -177,6 +183,8 @@ def get_similar_stock(coefficient_data, symbol, n=3, show_dots=False):
         build_linear_regression(symbol, show_statistics=False, show_dots=show_dots, show_plot=True)
 
     # remove the row for the input symbol
+    print(row)
+
     similar_stocks_delete = similar_stocks.drop(row.name)
     number = n * 2 - 1
     print("The " + str(number) + " simialr stocks are: ")
@@ -192,7 +200,7 @@ def similar_stocks(symbol):
     coefficient_data = pd.read_csv(stock_coefficient_file_name)
     return get_similar_stock(coefficient_data, symbol)
 
-
+@st.cache
 def dailyTop5Delta():
     delta_df = pd.read_csv(stock_coefficient_file_name)
     delta_df = delta_df[['Stock', 'LastDayChange']]

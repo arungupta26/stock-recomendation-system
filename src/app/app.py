@@ -50,32 +50,6 @@ plt.ylabel('Closing Price')
 plt.legend()
 st.pyplot(fig)
 
-# p1 = st.columns(1)
-#
-# with p1:
-
-
-# chart_data = pd.DataFrame(np.random.randn(20, 3), columns=['Actual Closing price', 'MA 100 Closing price',
-#                                                            'MA 200 Closing price'])
-#
-# st.line_chart(chart_data)
-
-# with p2:
-#     posDelta, negDelta = lrutil.dailyTop5Delta()
-#
-#     # l1, l2 = st.columns(2)
-#     #
-#     # with l1:
-#     st.subheader("Top gainers of the day(in %)")
-#     st.table(posDelta)
-#
-#
-# with p3:
-#
-#     st.subheader("Top losers of the day(in %)")
-#     st.table(negDelta)
-
-
 c1, c2 = st.columns(2)
 
 with c1:
@@ -102,8 +76,7 @@ with c2:
 
     st.subheader("Stocks you may be interested based on features selected and accuracy level")
     selected_features = st.multiselect("Please select the features", features, ["Volume", "Price"])
-    level = st.select_slider('Please select accuracy level.(Being 1 as LOW and 3 as HIGH)', options=[1, 2, 3],
-                             value=(2))
+    level = st.select_slider('Please select accuracy level.(Being 1 as LOW and 3 as HIGH)', options=[1, 2, 3], value=2)
 
     selected_feature_index = []
     index = 1
