@@ -1,3 +1,10 @@
+https://www.investopedia.com/news/history-of-universal-basic-income/
+https://www.investopedia.com/news/5-etfs-track-oil-usodbooilucouwti/
+https://www.investopedia.com/news/what-byzantium-hard-fork-ethereum/
+https://www.investopedia.com/news/3-blockchain-etfs-buy-2018/
+https://www.investopedia.com/news/5-etfs-hold-alibaba-shares/
+https://www.investopedia.com/news/how-are-disputes-smart-contracts-resolved/
+https://www.investopedia.com/news/number-millionaires-continues-increase/
 https://www.investopedia.com/news/top-video-game-stocks-2017/
 https://www.investopedia.com/news/how-do-i-buy-ethereum/
 https://www.investopedia.com/news/should-you-buy-gold-or-bitcoin/
@@ -6,12 +13,8 @@ https://www.investopedia.com/news/what-paul-krugmans-problem-bitcoin/
 https://www.investopedia.com/news/how-much-does-us-trade-mexico/
 https://www.investopedia.com/news/all-about-bitcoin-cash-hard-fork/
 https://www.investopedia.com/news/why-does-litecoin-follow-bitcoin-closely/
-https://www.investopedia.com/news/history-of-universal-basic-income/
 https://www.investopedia.com/news/price-cryptocurrencies-totally-dependent-china/
-https://www.investopedia.com/news/5-etfs-track-oil-usodbooilucouwti/
 https://www.investopedia.com/news/how-bitcoin-works/
-https://www.investopedia.com/news/number-millionaires-continues-increase/
-https://www.investopedia.com/news/3-blockchain-etfs-buy-2018/
 https://www.investopedia.com/news/how-sec-regs-will-change-cryptocurrency-markets/
 https://www.investopedia.com/news/what-are-tariffs-and-how-do-they-affect-you/
 https://www.investopedia.com/news/penaltyfree-way-get-529-money-back/
@@ -78,7 +81,6 @@ https://www.investopedia.com/news/what-stocks-are-marijuana-index/
 https://www.investopedia.com/news/more-half-top-100-cryptos-have-no-utility-report/
 https://www.investopedia.com/news/where-does-nobel-prize-money-come/
 https://www.investopedia.com/news/top-10-countries-highest-demand-gold-jewelry/
-https://www.investopedia.com/news/how-are-disputes-smart-contracts-resolved/
 https://www.investopedia.com/news/how-get-established-cryptocurrency-miner/
 https://www.investopedia.com/news/esg-and-bonds-its-match/
 https://www.investopedia.com/news/how-prime-day-impacts-amazon-stock/
@@ -247,7 +249,6 @@ https://www.investopedia.com/news/5-beaten-down-stocks-can-rally/
 https://www.investopedia.com/news/5-biotechs-may-surge-takeovers/
 https://www.investopedia.com/news/5-dividend-stocks-bargainhungry-investors/
 https://www.investopedia.com/news/5-energy-stocks-face-steep-pullbacks/
-https://www.investopedia.com/news/5-etfs-hold-alibaba-shares/
 https://www.investopedia.com/news/5-gurus-stock-picks-pricey-equities-market/
 https://www.investopedia.com/news/5-global-risks-could-hammer-stocks-2018/
 https://www.investopedia.com/news/5-industrial-stocks-facing-sharp-declines/
@@ -1230,7 +1231,6 @@ https://www.investopedia.com/news/weak-revenues-could-sink-marriott-uptrend/
 https://www.investopedia.com/news/wendys-releases-hip-hop-mixtape-throwing-shade-mcdonalds-and-burger-king/
 https://www.investopedia.com/news/what-alibaba-kroger-alliance-would-mean-amazon/
 https://www.investopedia.com/news/what-baupost-group-bought-and-sold-q3-13f/
-https://www.investopedia.com/news/what-byzantium-hard-fork-ethereum/
 https://www.investopedia.com/news/what-crackdown-icos-have-already-raised-almost-2-billion-already-year/
 https://www.investopedia.com/news/what-casper-latest-ethereum-upgrade/
 https://www.investopedia.com/news/what-biggest-security-threat-ripple-cryptocurrency/
@@ -1785,8 +1785,8 @@ https://www.investopedia.com/news/ibd-50-sees-significant-turnover/
 https://www.investopedia.com/news/russell-3000-breadth-turns-sharply-lower/
 https://www.investopedia.com/news/ussaudi-tensions-pushing-stocks-lower/
 https://www.investopedia.com/news/walmarts-investor-day-5-topics-expect/
-https://www.investopedia.com/news/market-bear-hussman-says-stocks-could-lose-20-trillion/
 https://www.investopedia.com/news/gms-stock-may-fall-2year-low/
+https://www.investopedia.com/news/market-bear-hussman-says-stocks-could-lose-20-trillion/
 https://www.investopedia.com/news/rising-rates-trade-war-continue-taking-toll-stocks/
 https://www.investopedia.com/news/three-tech-ceos-who-lost-money-dow-bloodbath/
 https://www.investopedia.com/news/it-too-late-save-snap/

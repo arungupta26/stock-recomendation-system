@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -6,11 +5,12 @@ from sklearn.cluster import KMeans
 
 stock_basic_details = './../resources/stock_basics.csv'
 
+
 def gen_clusters(features, columns, clusterNum, clusterPrint=0):
     dataset = pd.read_csv(stock_basic_details)
-    stocks = dataset.iloc[: ,0].values
+    stocks = dataset.iloc[:, 0].values
 
-    kmeans = KMeans(n_clusters=clusterNum ,init='k-means++' ,max_iter=300 ,n_init=10 ,random_state=0)
+    kmeans = KMeans(n_clusters=clusterNum, init='k-means++', max_iter=300, n_init=10, random_state=0)
 
     clusterIds = kmeans.fit_predict(features[columns])
 
@@ -35,16 +35,16 @@ def gen_clusters(features, columns, clusterNum, clusterPrint=0):
             clusterId += 1
     return clusters
 
-def in_cluster_stocks(stock_input, features ,fids_concerned ,level):
 
+def in_cluster_stocks(stock_input, features, fids_concerned, level):
     # First load the dataset on stock basics
     dataset = pd.read_csv(stock_basic_details)
-    stocks = dataset.iloc[: ,0].values
+    stocks = dataset.iloc[:, 0].values
     # print("Below is stock list in dataset:")
     # print(stocks)
     # print("-------------------------------------------------------------")
 
-    features = dataset.iloc[: ,1:].values
+    features = dataset.iloc[:, 1:].values
     features = pd.DataFrame(features)
     features.columns = ["Price", "Volume", "Market Cap", "Beta", "PE Ratio", "EPS"]
     cols = features.columns
@@ -55,7 +55,6 @@ def in_cluster_stocks(stock_input, features ,fids_concerned ,level):
     # Second we eliminate null values in the dataset
     for i in features.columns:
         features[i] = features[i].fillna(float(features[i].mean()))
-
 
     clusterNum = level * 30
     clusterPrint = 0
