@@ -17,6 +17,7 @@ stock_coefficient_file_name = './../resources/Stock_Coefficients.csv'
 # Considering data from 2000 to till date for latest trend
 start = '2018-01-01'
 end = date.today().strftime("%Y-%m-%d")
+end = '2022-02-05'
 
 
 # function1 to get stock list from text file
